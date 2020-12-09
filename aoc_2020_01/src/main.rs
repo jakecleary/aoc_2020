@@ -12,14 +12,14 @@ fn main() {
         .map(|l| l.unwrap().parse::<i32>().unwrap())
         .collect();
 
-    let pair = get_combo(&values, TOTAL).unwrap();
-    let trio = get_combo_3(&values, TOTAL).unwrap();
+    let pair = get_pair(&values, TOTAL).unwrap();
+    let trio = get_trio(&values, TOTAL).unwrap();
 
     println!("Part 1: {}", pair.0 * pair.1);
     println!("Part 2: {}", trio.0 * trio.1 * trio.2);
 }
 
-fn get_combo(values: &HashSet<i32>, total: i32) -> Option<(i32, i32)> {
+fn get_pair(values: &HashSet<i32>, total: i32) -> Option<(i32, i32)> {
     for value in values {
         let remainder_needed = total - value;
         if values.contains(&remainder_needed) {
@@ -29,10 +29,10 @@ fn get_combo(values: &HashSet<i32>, total: i32) -> Option<(i32, i32)> {
     None
 }
 
-fn get_combo_3(values: &HashSet<i32>, total: i32) -> Option<(i32, i32, i32)> {
+fn get_trio(values: &HashSet<i32>, total: i32) -> Option<(i32, i32, i32)> {
     for value in values {
         let remainder_needed = total - value;
-        if let Some((first, second)) = get_combo(values, remainder_needed) {
+        if let Some((first, second)) = get_pair(values, remainder_needed) {
             if first != second && first != remainder_needed && second != remainder_needed {
                 return Some((*value, first, second));
             }
